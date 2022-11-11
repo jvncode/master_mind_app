@@ -20,7 +20,9 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item">
-            <button type="submit" name="btnNewGame" class="btn btn-success">New Game</button>
+            <form action="" method="POST">
+                <button type="submit" name="btn" value="new_game" class="btn btn-success">New Game</button>
+            </form>
 
             </li>
             <li class="nav-item">
@@ -58,7 +60,7 @@
             </div>
             <div class="col-8">
                 <div class="card">
-                <h5 class="card-header">Featured</h5>
+                <h5 class="card-header">Game created: {{ date }} </h5>
                 <div class="card-body">
                     <h5 class="card-title">
                         <table class="table">
@@ -71,21 +73,44 @@
                         </thead>
                         <tbody>
                             <tr>
-                            <th scope="row"></th>
-                            <td></td>
+                            <th scope="row" style="color: red;">{{ round }}</th>
+                            <input type="text" name="number_round" value="{{ round }}" hidden>
+                            <td class="row align-items-start" style="margin-left: 15%;">
+                                <select class="form-select" name="bet" id="" style="width: 20%;">
+                                    <option value="0" selected>Select</option>
+                                    <option value="B" style="background-color:blue">B</option>
+                                    <option value="Y">Y</option>
+                                    <option value="G">G</option>
+                                    <option value="R">R</option>
+                                </select>
+                                <select class="form-select" name="bet" id="" style="width: 20%;">
+                                    <option value="0" selected>Select</option>
+                                    <option value="B" style="color: blue;">B</option>
+                                    <option value="Y">Y</option>
+                                    <option value="G">G</option>
+                                    <option value="R">R</option>
+                                </select>
+                                <select class="form-select" name="bet" id="" style="width: 20%;">
+                                    <option value="0" selected>Select</option>
+                                    <option value="B" style="color: blue;">B</option>
+                                    <option value="Y">Y</option>
+                                    <option value="G">G</option>
+                                    <option value="R">R</option>
+                                </select>
+                                <select class="form-select" name="bet" id="" style="width: 20%;">
+                                    <option value="0" selected>Select</option>
+                                    <option value="B" style="color: blue;">B</option>
+                                    <option value="Y">Y</option>
+                                    <option value="G">G</option>
+                                    <option value="R">R</option>
+                                </select>
+                            </td>
                             <td></td>
                             </tr>
                         </tbody>
                         </table>
-
                     </h5>
-                    <p class="card-text">
-                        <button type="button" class="btn btn-primary">&nbsp;</button>
-                        <button type="button" class="btn btn-warning">&nbsp;</button>
-                        <button type="button" class="btn btn-success">&nbsp;</button>
-                        <button type="button" class="btn btn-danger">&nbsp;</button>
-                    </p>
-                    <button type="submit" class="btn btn-dark" name="go">Check!</a>
+                    <button type="submit" class="btn btn-success" name="btn" value="check">Check!</a>
                 </div>
                 </div>
             </div>
