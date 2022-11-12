@@ -5,6 +5,7 @@ from random import randint
 from db import executions, setup
 from datetime import datetime
 from db import queries
+from helper import check_hits
 
 def create_app():
     app = Flask(__name__)
@@ -62,7 +63,9 @@ def create_app():
             black_tokens = 0
             white_tokens = 0
             status = 0
+            secret_code = 'BBBB'  # Provisional example variable
             # TODO Function that returns how many successes there are
+            tokens = check_hits(secret_code, bet)
             executions.exec_db(queries.update_data, data=(1, bet, black_tokens, white_tokens, status, round_game))
 
             return redirect(url_for('game', mode='in_progress'))
