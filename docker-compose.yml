@@ -1,0 +1,12 @@
+version: '2'
+services:
+    web:
+        build: .
+        ports:
+            - "8000:8000"
+        volumes:
+            - .:/app
+        depends_on:
+            - sqlite3
+    sqlite3:
+        image: keinos/sqlite3:latest
