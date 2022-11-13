@@ -13,8 +13,6 @@ create_table = '''
 
 delete_table = '''DELETE FROM plays;'''
 
-
-
 insert_data = '''
             INSERT INTO plays (secret_code, bets, black_tokens, white_tokens, rounds, status, play_date)
             VALUES (?, ?, ?, ?, ?, ?, ?);
@@ -23,5 +21,7 @@ insert_data = '''
 get_data = ''' SELECT * FROM plays; '''
 
 update_data = ''' UPDATE plays
-                SET id = ?, bets = ?, black_tokens = ?, white_tokens = ?, status = ?
+                SET bets = ?, black_tokens = ?, white_tokens = ?, status = ?
                 WHERE rounds == ?; '''
+
+update_round = ''' UPDATE plays SET rounds = ? WHERE rounds == ?; '''

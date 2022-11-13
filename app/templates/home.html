@@ -1,140 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Mind - INARI Test</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Master Mind - INARI Test</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-</head>
-<body>
+    </head>
+    <body style="background-color: rgb(221, 215, 233);">
 
-    <!-- NAV BAR -->
-    <nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Master Mind</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-            <form action="" method="POST">
-                <button type="submit" name="btn" value="new_game" class="btn btn-success">New Game</button>
-            </form>
+        <!-- NAV BAR -->
+        <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Master Mind</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                <form action="" method="POST">
+                    <button type="submit" name="btn" value="new_game" class="btn btn-success">New Game</button>
+                    <button type="submit" name="btn" value="json" class="btn btn-secondary">Response JSON</button>
+                </form>
 
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="#"></a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="#"></a>
-            </li>
-            <li class="nav-item dropdown">
-            <!-- 
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            </a>
-            -->
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#"></a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#"></a>
+                </li>
+                <li class="nav-item dropdown">
+
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+                </li>
             </ul>
-            </li>
-        </ul>
+            </div>
         </div>
-    </div>
-    </nav>
-    <!-- END NAV BAR -->
+        </nav>
+        <!-- END NAV BAR -->
+        <br>
+        <!-- ALERT MESSAGE -->
+        {% if error_alert %}
+            <div class="container text-center">
+                <div class="alert alert-danger" role="alert">
+                    Ooops! You must select all the colors in your bet!
+                </div>
+            </div>
+        {% endif %}
+        <!-- END ALERT MESSAGE -->
 
-    <br><br>
+        <!-- WIN MESSAGE -->
+        {% if status == 'win' %}
+            <div class="container text-center">
+                <div class="alert alert-success" role="alert">
+                    CONGRATULATIONS!! You have solved the secret code {{ data_game[0][1] }} in {{ data_game|length-1 }} rounds
+                </div>
+            </div>
+        {% endif %}
+        <!-- END WIN MESSAGE -->
 
+        <!-- GAME OVER MESSAGE -->
+        {% if status == 'game_over' %}
+            <div class="container text-center">
+                <div class="alert alert-primary" role="alert">
+                    GAME OVER!! The secret code was {{ data_game[0][1] }}. Try again!
+                </div>
+            </div>
+        {% endif %}
+        <!-- END GAME OVER MESSAGE -->
 
-    <form method="POST" action="" id="">
         <!-- BODY MAIN -->
-        <div class="container text-center">
-        <div class="row">
-            <div class="col">
-            <!-- LEFT UP -->
-            </div>
-            <div class="col-8">
-                <div class="card">
-                <h5 class="card-header">Game created: {{ date }} </h5>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <table class="table">
-                        <thead>
-                            <tr>
-                            <th scope="col">Round</th>
-                            <th scope="col">Bet</th>
-                            <th scope="col">Result</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            <th scope="row" style="color: red;">{{ round }}</th>
-                            <input type="text" name="number_round" value="{{ round }}" hidden>
-                            <td class="row align-items-start" style="margin-left: 15%;">
-                                <select class="form-select" name="bet" id="" style="width: 20%;">
-                                    <option value="0" selected>Select</option>
-                                    <option value="B" style="background-color:blue">B</option>
-                                    <option value="Y">Y</option>
-                                    <option value="G">G</option>
-                                    <option value="R">R</option>
-                                </select>
-                                <select class="form-select" name="bet" id="" style="width: 20%;">
-                                    <option value="0" selected>Select</option>
-                                    <option value="B" style="color: blue;">B</option>
-                                    <option value="Y">Y</option>
-                                    <option value="G">G</option>
-                                    <option value="R">R</option>
-                                </select>
-                                <select class="form-select" name="bet" id="" style="width: 20%;">
-                                    <option value="0" selected>Select</option>
-                                    <option value="B" style="color: blue;">B</option>
-                                    <option value="Y">Y</option>
-                                    <option value="G">G</option>
-                                    <option value="R">R</option>
-                                </select>
-                                <select class="form-select" name="bet" id="" style="width: 20%;">
-                                    <option value="0" selected>Select</option>
-                                    <option value="B" style="color: blue;">B</option>
-                                    <option value="Y">Y</option>
-                                    <option value="G">G</option>
-                                    <option value="R">R</option>
-                                </select>
-                            </td>
-                            <td></td>
-                            </tr>
-                        </tbody>
-                        </table>
-                    </h5>
-                    <button type="submit" class="btn btn-success" name="btn" value="check">Check!</a>
+        <form method="POST" action="" id="">
+            <div class="container text-center">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-8">
+                    <div class="card" style="background-color: rgb(141, 183, 238);">
+                    <h5 class="card-header">Game created : {{ data_game[0][7][:19] }} </h5>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <table class="table">
+                            <thead>
+                                <tr>
+                                <th scope="col">Round</th>
+                                <th scope="col">Bet</th>
+                                <th scope="col">Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for data in data_game %}
+                                    <tr>
+                                    <th scope="row" style="color: red;">{{ loop.index }}</th>
+                                    <td class="row align-items-start" style="margin-left: 15%;">
+                                        {% if data_game|length == data[0] and status == 'ready' %}
+                                        <input type="text" name="round_game" value="{{ loop.index }}" hidden>
+                                        <select class="form-select" name="bet" id="" style="width: 20%;">
+                                            <option value="0" selected>Select</option>
+                                            <option value="B" >B</option>
+                                            <option value="Y">Y</option>
+                                            <option value="G">G</option>
+                                            <option value="R">R</option>
+                                        </select>
+                                        <select class="form-select" name="bet" id="" style="width: 20%;">
+                                            <option value="0" selected>Select</option>
+                                            <option value="B" style="color: blue;">B</option>
+                                            <option value="Y">Y</option>
+                                            <option value="G">G</option>
+                                            <option value="R">R</option>
+                                        </select>
+                                        <select class="form-select" name="bet" id="" style="width: 20%;">
+                                            <option value="0" selected>Select</option>
+                                            <option value="B" style="color: blue;">B</option>
+                                            <option value="Y">Y</option>
+                                            <option value="G">G</option>
+                                            <option value="R">R</option>
+                                        </select>
+                                        <select class="form-select" name="bet" id="" style="width: 20%;">
+                                            <option value="0" selected>Select</option>
+                                            <option value="B" style="color: blue;">B</option>
+                                            <option value="Y">Y</option>
+                                            <option value="G">G</option>
+                                            <option value="R">R</option>
+                                        </select>
+                                        {% else %}
+                                            <h5 class="h5" style="margin-left: -10%;">{{ data[2] }}</h5>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if data[3] != None %}
+                                            {% if data[3] == 1 %}
+                                                <span class="badge text-bg-dark">&nbsp;</span>
+                                            {% elif data[3] == 2 %}
+                                                <span class="badge text-bg-dark">&nbsp;</span>
+                                                <span class="badge text-bg-dark">&nbsp;</span>
+                                            {% elif data[3] == 3 %}
+                                                <span class="badge text-bg-dark">&nbsp;</span>
+                                                <span class="badge text-bg-dark">&nbsp;</span>
+                                                <span class="badge text-bg-dark">&nbsp;</span>
+                                            {% elif data[3] == 4 %}
+                                                <span class="badge text-bg-dark">&nbsp;</span>
+                                                <span class="badge text-bg-dark">&nbsp;</span>
+                                                <span class="badge text-bg-dark">&nbsp;</span>
+                                                <span class="badge text-bg-dark">&nbsp;</span>
+                                            {% endif %}
+                                            {% if data[4] == 1 %}
+                                                <span class="badge text-bg-light">&nbsp;</span>
+                                            {% elif data[4] == 2 %}
+                                                <span class="badge text-bg-light">&nbsp;</span>
+                                                <span class="badge text-bg-light">&nbsp;</span>
+                                            {% elif data[4] == 3 %}
+                                                <span class="badge text-bg-light">&nbsp;</span>
+                                                <span class="badge text-bg-light">&nbsp;</span>
+                                                <span class="badge text-bg-light">&nbsp;</span>
+                                            {% elif data[4] == 4 %}
+                                                <span class="badge text-bg-light">&nbsp;</span>
+                                                <span class="badge text-bg-light">&nbsp;</span>
+                                                <span class="badge text-bg-light">&nbsp;</span>
+                                                <span class="badge text-bg-light">&nbsp;</span>
+                                            {% endif %}
+                                            <!-- 
+                                            <span class="badge text-bg-dark">Dark</span> {{ data[3] }}
+                                            <span class="badge text-bg-light">White</span> {{ data[4] }}
+                                            -->
+                                        {% endif %}
+                                    </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            </table>
+                        </h5>
+                        {% if status == 'ready' %}
+                            <button type="submit" class="btn btn-success" name="btn" value="check">Check!</a>
+                        {% endif %}
+                    </div>
+                    </div>
                 </div>
-                </div>
+                <div class="col"></div>
             </div>
-            <div class="col">
-            <!-- RIGTH UP -->
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-5"></div>
+                <div class="col"></div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-            <!-- LEFT DOWN -->
             </div>
-            <div class="col-5">
-            <!-- CENTER DOWM -->
-            </div>
-            <div class="col">
-            </div>
-        </div>
-        </div>
+        </form>
         <!-- END BODY MAIN -->
-    </form>
 
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-
-</body>
+        <!-- SOURCES JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+        <!-- END SOURCES JS -->
+    </body>
 </html>
