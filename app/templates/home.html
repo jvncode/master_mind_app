@@ -32,14 +32,7 @@
                 <li class="nav-item">
                 <a class="nav-link" href="#"></a>
                 </li>
-                <li class="nav-item dropdown">
-
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-                </li>
+                <li class="nav-item dropdown"></li>
             </ul>
             </div>
         </div>
@@ -60,7 +53,7 @@
         {% if status == 'win' %}
             <div class="container text-center">
                 <div class="alert alert-success" role="alert">
-                    CONGRATULATIONS!! You have solved the secret code {{ data_game[0][1] }} in {{ data_game|length-1 }} rounds
+                    CONGRATULATIONS!! You have solved the secret code {{ data_game[0][1] }} in {{ data_game|length }} rounds
                 </div>
             </div>
         {% endif %}
@@ -100,35 +93,16 @@
                                     <th scope="row" style="color: red;">{{ loop.index }}</th>
                                     <td class="row align-items-start" style="margin-left: 15%;">
                                         {% if data_game|length == data[0] and status == 'ready' %}
-                                        <input type="text" name="round_game" value="{{ loop.index }}" hidden>
-                                        <select class="form-select" name="bet" id="" style="width: 20%;">
-                                            <option value="0" selected>Select</option>
-                                            <option value="B" >B</option>
-                                            <option value="Y">Y</option>
-                                            <option value="G">G</option>
-                                            <option value="R">R</option>
-                                        </select>
-                                        <select class="form-select" name="bet" id="" style="width: 20%;">
-                                            <option value="0" selected>Select</option>
-                                            <option value="B" style="color: blue;">B</option>
-                                            <option value="Y">Y</option>
-                                            <option value="G">G</option>
-                                            <option value="R">R</option>
-                                        </select>
-                                        <select class="form-select" name="bet" id="" style="width: 20%;">
-                                            <option value="0" selected>Select</option>
-                                            <option value="B" style="color: blue;">B</option>
-                                            <option value="Y">Y</option>
-                                            <option value="G">G</option>
-                                            <option value="R">R</option>
-                                        </select>
-                                        <select class="form-select" name="bet" id="" style="width: 20%;">
-                                            <option value="0" selected>Select</option>
-                                            <option value="B" style="color: blue;">B</option>
-                                            <option value="Y">Y</option>
-                                            <option value="G">G</option>
-                                            <option value="R">R</option>
-                                        </select>
+                                            <input type="text" name="round_game" value="{{ loop.index }}" hidden>
+                                            {% for x in range(0, 4) %}
+                                            <select class="form-select" name="bet" id="" style="width: 20%;">
+                                                <option value="0" selected>Select</option>
+                                                <option value="B">B</option>
+                                                <option value="Y">Y</option>
+                                                <option value="G">G</option>
+                                                <option value="R">R</option>
+                                            </select>
+                                            {% endfor %}
                                         {% else %}
                                             <h5 class="h5" style="margin-left: -10%;">{{ data[2] }}</h5>
                                         {% endif %}
@@ -165,10 +139,6 @@
                                                 <span class="badge text-bg-light">&nbsp;</span>
                                                 <span class="badge text-bg-light">&nbsp;</span>
                                             {% endif %}
-                                            <!-- 
-                                            <span class="badge text-bg-dark">Dark</span> {{ data[3] }}
-                                            <span class="badge text-bg-light">White</span> {{ data[4] }}
-                                            -->
                                         {% endif %}
                                     </td>
                                     </tr>

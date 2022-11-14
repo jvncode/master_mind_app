@@ -30,7 +30,8 @@ def create_app():
                     if round_game == 10:
                         status = 'game_over'
                     if status == 'ready':
-                        executions.exec_db(queries.update_round, data=(round_game+1, round_game+1))
+                        executions.exec_db(queries.update_round,
+                                           data=(round_game+1,round_game+1))
                         data_game = executions.exec_db(queries.get_data)
                         new_row = (data_game[0][1],
                                 '',
@@ -45,7 +46,9 @@ def create_app():
                 except Exception as e:
                     logging.error("Error : {}".format(code))
                 finally:
-                    return render_template('home.html', data_game=data_game, status=status)
+                    return render_template('home.html',
+                                           data_game=data_game,
+                                           status=status)
             else:
                 setup.setup_db('delete')
                 code = []
@@ -62,7 +65,10 @@ def create_app():
                 except Exception as e:
                     logging.error("Error generating secret code: {}".format(e))
                 finally:
-                    return render_template('home.html', data_game=data_game, mode='in_progress', status='ready')
+                    return render_template('home.html',
+                                           data_game=data_game,
+                                           mode='in_progress',
+                                           status='ready')
 
         if request.method == 'POST':
             if request.form['btn'] == 'new_game':
@@ -73,8 +79,14 @@ def create_app():
                     round_game = request.form.get('round_game')
                     if '0' in bet:
                         data_game = executions.exec_db(queries.get_data)
-                        return render_template('home.html', error_alert=True, mode='in_progress', data_game=data_game, status='ready')
-                    return redirect(url_for('new_bet', bet="".join(bet), round_game=round_game))
+                        return render_template('home.html',
+                                               error_alert=True,
+                                               mode='in_progress',
+                                               data_game=data_game,
+                                               status='ready')
+                    return redirect(url_for('new_bet',
+                                            bet="".join(bet),
+                                            round_game=round_game))
                 except Exception as e:
                     logging.error("Error in POST func game(): {}".format(e))
             if request.form['btn'] == 'json':
@@ -90,15 +102,23 @@ def create_app():
                 data_game = executions.exec_db(queries.get_data)
                 black_tokens, white_tokens = check_hits(data_game[0][1], bet)
                 if black_tokens == 4:
-                    executions.exec_db(queries.update_data, data=(bet, black_tokens, white_tokens, 1, round_game))
-                    logging.info("Validation tokens - {} Blacks & {} Whites".format(black_tokens, white_tokens))
-                    return redirect(url_for('game', mode='in_progress', round_game=round_game, status='win'))
+                    executions.exec_db(queries.update_data,
+                                data=(bet, black_tokens, white_tokens, 1, round_game))
+                    logging.info("Validation tokens - {} Blacks & {} Whites".format(
+                                black_tokens, white_tokens))
+                    return redirect(url_for('game',
+                                            mode='in_progress',
+                                            round_game=round_game,
+                                            status='win'))
                 else:
                     executions.exec_db(queries.update_data, data=(
                         bet, black_tokens, white_tokens, 0, int(round_game)))
                     logging.info(
-                        "Validation tokens - {} Blacks & {} Whites".format(black_tokens, white_tokens))
-                    return redirect(url_for('game', mode='in_progress', round_game=round_game))
+                        "Validation tokens - {} Blacks & {} Whites".format(
+                            black_tokens, white_tokens))
+                    return redirect(url_for('game',
+                                            mode='in_progress',
+                                            round_game=round_game))
             except Exception as e:
                 logging.error("Error in func new_bet() and validation bet: {}".format(e))
 
